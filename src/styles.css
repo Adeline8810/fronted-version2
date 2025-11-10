@@ -1,1 +1,308 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* 💕 Importar una fuente elegante desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap');
+
+
+/* =============================
+   ESTILOS GLOBALES DE LA APP
+============================= */
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: #fff7f9; /* fondo muy suave rosado */
+  color: #333;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  color: #222;
+}
+
+/* =============================
+   ESTILOS PERSONALIZADOS DE TABS ROSADOS
+============================= */
+
+/* Fondo y forma básica de los tabs */
+::ng-deep .mat-mdc-tab {
+  background: #ffd6e7; /* rosado suave */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  margin: 0 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(255, 105, 180, 0.15);
+}
+
+/* Hover */
+::ng-deep .mat-mdc-tab:hover {
+  background: #ffb3d9; /* un poco más intenso al pasar el mouse */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+}
+
+/* Tab activa */
+::ng-deep .mat-mdc-tab.mdc-tab--active {
+  background: linear-gradient(to bottom right, #ff66b2, #ff99cc);
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 6px 15px rgba(255, 102, 178, 0.4);
+  transform: translateY(-3px);
+}
+
+/* Texto general de los tabs */
+::ng-deep .mat-mdc-tab .mdc-tab__content {
+  color: #5a1745 !important; /* color vino suave */
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Texto del tab activo */
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__content {
+  color: #fff !important;
+}
+
+/* Quitamos la línea inferior del tab activo */
+::ng-deep .mat-mdc-tab .mdc-tab-indicator {
+  display: none !important;
+}
+
+/* =============================
+   CONTENEDOR DE CONTENIDO
+============================= */
+.tab-content {
+  background-color: white;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-top: -4px;
+}
+
+/* =============================
+   AJUSTES VISUALES GENERALES
+============================= */
+.mat-mdc-tab-group {
+  background-color: transparent;
+  border-radius: 12px 12px 0 0;
+  padding-top: 0.5rem;
+}
+
+::ng-deep .mat-mdc-tab-body-wrapper {
+  border-radius: 0 0 12px 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(255, 105, 180, 0.15);
+}
+
+.user-form-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  justify-content: center; /* Centra verticalmente si hay espacio */
+  text-align: center;
+  /*width: 100%;*/
+  padding: 20px;
+  background-color: #fff7f7; /* suave rosado */
+  border-radius: 25px;
+}
+
+/* Centrar los campos */
+.form-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Los campos más centrados y más suaves */
+.campo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+/* Caja de entrada estilizada */
+input {
+  width: 60%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid pink;
+  outline: none;
+  text-align: center;
+  background-color: #fffafa;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: #ff4f81;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+/* Iconitos lindos a la izquierda del input */
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+}
+
+/* Botones al centro */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+
+.custom-dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* 📦 Contenedor principal del formulario */
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* 💌 Tarjeta del formulario */
+.user-form-card {
+  background-color: #fff6f8;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.user-form-card:hover {
+  transform: translateY(-4px);
+}
+
+/* 🎀 Encabezado del formulario */
+.form-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-header img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* ✨ Estilo del título principal */
+.form-header h2 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #d63384;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  margin: 0;
+}
+
+/* 🧷 Campos del formulario */
+.campo {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.campo label {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* 🎀 Input con icono */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 2px solid #ffc2d1;
+  border-radius: 10px;
+  padding: 6px 10px;
+  transition: border-color 0.3s ease;
+}
+
+.input-group:hover {
+  border-color: #ff80ab;
+}
+
+.input-icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  background: transparent;
+}
+
+/* 🌸 Botones */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.btn-guardar, .btn-cancelar {
+  border: none;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn-guardar {
+  background-color: #ff99c8;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(255, 153, 200, 0.5);
+}
+
+.btn-guardar:hover {
+  background-color: #ff66b2;
+  transform: scale(1.05);
+}
+
+.btn-cancelar {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-cancelar:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+.snackbar-success {
+  background-color: #f48fb1 !important;
+  color: white !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}

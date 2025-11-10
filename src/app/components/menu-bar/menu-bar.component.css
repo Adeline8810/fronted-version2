@@ -1,0 +1,46 @@
+/* === Fondo general del grupo de tabs === */
+.mat-mdc-tab-group {
+  background-color: #fdf9fa; /* fondo muy suave */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(203, 157, 162, 0.15);
+  padding-top: 6px;
+}
+
+/* === Cada pestaña === */
+.mat-mdc-tab {
+  background-color: #f4dce2; /* rosa palo */
+  border-radius: 10px 10px 0 0;
+  margin: 0 6px;
+  min-width: 100px;
+  transition: all 0.3s ease;
+  color: #4b2b33 !important;
+  font-weight: 500;
+}
+
+/* === Hover de pestaña === */
+.mat-mdc-tab:hover {
+  background-color: #eac4cc; /* tono un poco más oscuro al pasar el mouse */
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(203, 157, 162, 0.25);
+}
+
+/* === Pestaña activa === */
+.mat-mdc-tab.mdc-tab--active {
+  background: linear-gradient(135deg, #d9a7b0, #e8b6bf); /* degradado suave */
+  color: #ffffff !important;
+  font-weight: 600;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(217, 167, 176, 0.4);
+}
+
+/* === Texto dentro de la pestaña === */
+.mdc-tab__text-label {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* === Indicador de línea debajo (oculto) === */
+.mdc-tab-indicator {
+  display: none !important;
+}

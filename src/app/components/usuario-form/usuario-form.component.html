@@ -1,0 +1,39 @@
+<div class="dialog-container">
+  <div class="user-form-card">
+    <div class="form-header">
+      <img src="assets/iconos/user.jpg" alt="icon" class="header-icon" width="50px;" height="50px;">
+      <h2>{{ data ? 'Editar Usuario ✏️' : 'Nuevo Usuario 💕' }}</h2>
+    </div>
+
+    <form [formGroup]="form" class="form-body">
+      <div class="campo">
+        <label>Nombre</label>
+        <div class="input-group">
+          <img src="assets/iconos/user2.jpg" class="input-icon" alt="nombre icon" width="30px;" height="30px;">
+          <input formControlName="nombre" placeholder="Ingresa el nombre">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Correo electrónico</label>
+        <div class="input-group">
+          <img src="assets/iconos/email.jpg" class="input-icon" alt="correo icon" width="30px;" height="30px;">
+          <input formControlName="email" type="email" placeholder="ejemplo@correo.com">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Contraseña</label>
+        <div class="input-group">
+          <img src="assets/iconos/password.jpg" class="input-icon" alt="clave icon" width="30px;" height="30px;">
+          <input formControlName="password" type="password" [placeholder]="data ? 'Dejar en blanco si no quieres cambiarla' : 'Ingresa una contraseña'">
+        </div>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" (click)="guardar()" class="btn-guardar">💗 Guardar</button>
+        <button type="button" (click)="cancelar()" class="btn-cancelar">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
