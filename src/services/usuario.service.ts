@@ -7,7 +7,8 @@ import { Usuario } from '../models/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8082/api/usuarios'; // 👈 ajusta según tu backend
+  //private apiUrl = 'http://localhost:8080/api/usuarios'; // 👈 ajusta según tu backend
+  private apiUrl = 'https://proyecto-backend-adeline.cleverapps.io/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
