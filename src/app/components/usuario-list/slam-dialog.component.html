@@ -1,0 +1,35 @@
+<div class="slam-container" *ngIf="!completado">
+  <h1 class="titulo">🌸 Mi Slam 🌸</h1>
+
+  <div class="pregunta-card" *ngIf="preguntas.length">
+    <h2>{{ preguntas[preguntaActual].texto }}</h2>
+
+    <!-- Solo en la primera pregunta mostramos la carga de foto -->
+    <div *ngIf="preguntaActual === 0">
+      <input type="file" (change)="onFotoSeleccionada($event)" />
+    </div>
+
+    <textarea
+      [(ngModel)]="respuestaActual"
+      placeholder="Escribe tu respuesta aquí..."
+    ></textarea>
+
+    <div class="botones">
+      <button
+        class="boton-volver"
+        [disabled]="preguntaActual === 0"
+        (click)="anteriorPregunta()"
+      >
+        ⬅️ Regresar
+      </button>
+
+      <button class="boton-continuar" (click)="siguientePregunta()">
+        {{ preguntaActual === preguntas.length - 1 ? 'Guardar todo' : 'Continuar ➡️' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="mensaje-final" *ngIf="completado">
+  <h2>🎉 ¡Gracias por llenar mi Slam! 💖</h2>
+</div>

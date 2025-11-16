@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  //private apiUrl = 'http://localhost:8080/api/usuarios'; // 👈 ajusta según tu backend
-
-   private apiUrl ='https://app-f2360acc-0222-4cf5-bedd-24f04930dcd6.cleverapps.io/api/usuarios';
+  private api = 'http://localhost:8080/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Obtener todos los usuarios
+  register(u: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.api}/register`, u);
+  }
+
+  login(username: string, password: string): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.api}/login`, { username, password });
+  }
+
   obtenerUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.apiUrl);
+    return this.http.get<Usuario[]>(this.api);
   }
 
-  // ✅ Agregar un nuevo usuario
-  agregarUsuario(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(this.apiUrl, usuario);
+  agregarUsuario(u: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.api}/register`, u);
   }
 
-  // ✅ Actualizar usuario existente
-  actualizarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.apiUrl}/${id}`, usuario);
+  actualizarUsuario(id: number, u: Usuario) {
+    return this.http.put<Usuario>(`${this.api}/${id}`, u);
   }
 
-  // ✅ Eliminar usuario
-  eliminarUsuario(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  eliminarUsuario(id: number) {
+    return this.http.delete<void>(`${this.api}/${id}`);
   }
 }

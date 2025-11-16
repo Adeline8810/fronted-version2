@@ -1,146 +1,112 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
+import { UsuarioInfoDialogComponent } from './usuario-info-dialog.component';
+import { SlamDialogComponent } from './slam-dialog.component';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-usuario-list',
   standalone: true,
   imports: [
     CommonModule,
-    MatButtonModule,
     MatTableModule,
-    MatDialogModule,
+    MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
-  templateUrl: './usuario-list.component.html'
+  templateUrl: './usuario-list.component.html',
+  styleUrls: ['./usuario-list.component.css']
 })
 export class UsuarioListComponent implements OnInit {
-  displayedColumns = ['nombre', 'email', 'acciones'];
-  usuarios: Usuario[] = [];
+  usuarios = new MatTableDataSource<Usuario>([]);
+  displayedColumns: string[] = ['username','nombre', 'email', 'acciones'];
+  loading = false;
 
-  constructor(private dialog: MatDialog, private usuarioService: UsuarioService, private snackBar: MatSnackBar) {}
+  constructor(private dialog: MatDialog, private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
     this.cargarUsuarios();
   }
 
-  cargarUsuarios() {
-    this.usuarioService.obtenerUsuarios().subscribe(data => this.usuarios = data);
-  }
-
-  nuevoUsuario() {
-  //const dialogRef = this.dialog.open(UsuarioFormComponent);
-
-  const dialogRef = this.dialog.open(UsuarioFormComponent, {
-  width: '500px',   // ⬅️ ajusta el ancho
-  height: 'auto',   // ⬅️ opcional
-  panelClass: 'custom-dialog-container'
-});
-
-
-  dialogRef.afterClosed().subscribe(result => {
-    console.log('Resultado recibido del diálogo:', result);
-    if (result) {
-      this.usuarioService.agregarUsuario(result).subscribe({
-        next: () => {
-          console.log('Usuario agregado correctamente');
-          this.cargarUsuarios();
-        },
-        error: err => console.error('Error al agregar usuario:', err)
-      });
-    }
-  });
-}
-
-  editarUsuario(usuario: Usuario) {
-    //const dialogRef = this.dialog.open(UsuarioFormComponent, { data: usuario });
-    const dialogRef = this.dialog.open(UsuarioFormComponent, {
-      width: '500px',   // ⬅️ ajusta el ancho
-      height: 'auto',   // ⬅️ opcional
-      panelClass: 'custom-dialog-container',
-      data: usuario
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.usuarioService.actualizarUsuario(usuario.id!, result)
-          .subscribe(() => this.cargarUsuarios());
+  cargarUsuarios(): void {
+    this.loading = true;
+    this.usuarioService.obtenerUsuarios().subscribe({
+      next: (data) => {
+        this.usuarios.data = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios:', err);
+        this.loading = false;
       }
     });
   }
 
+  nuevoUsuario(): void {
+    const dialogRef = this.dialog.open(UsuarioFormComponent, { width: '400px' });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.usuarioService.agregarUsuario(result).subscribe({
+          next: () => this.cargarUsuarios(),
+          error: (e) => console.error('Error al agregar usuario:', e)
+        });
+      }
+    });
+  }
 
-eliminarUsuario(u: Usuario) {
-  Swal.fire({
-    title: '💔 ¿Eliminar usuario?',
-    html: `<p style="font-size:18px; color:#6b005b;">
-             ¿Seguro que deseas eliminar a <b>${u.nombre}</b>?
-           </p>`,
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: '💗 Sí, eliminar',
-    cancelButtonText: 'Cancelar',
-    confirmButtonColor: '#f48fb1',
-    cancelButtonColor: '#bdbdbd',
-    background: '#fff0f5',
-    color: '#4a004e',
-    backdrop: `
-      rgba(255, 192, 203, 0.3)
-      left top
-      no-repeat
-    `,
-    customClass: {
-      popup: 'rounded-3xl shadow-2xl animate__animated animate__fadeInDown',
-      title: 'font-bold text-2xl',
-      confirmButton: 'rounded-full px-4 py-2 text-white font-semibold',
-      cancelButton: 'rounded-full px-4 py-2 text-gray-700 font-semibold'
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.usuarioService.eliminarUsuario(u.id!).subscribe({
-        next: () => {
-          Swal.fire({
-            title: '✨ Usuario eliminado',
-            html: `<p style="font-size:17px; color:#6b005b;">
-                     El usuario <b>${u.nombre}</b> fue eliminado correctamente.
-                   </p>`,
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#f48fb1',
-            background: '#fff0f5',
-            color: '#4a004e',
-            customClass: {
-              popup: 'rounded-3xl shadow-lg animate__animated animate__fadeInUp'
-            }
-          });
-          this.cargarUsuarios();
-        },
-        error: () => {
-          Swal.fire({
-            title: '❌ Error',
-            text: 'No se pudo eliminar el usuario.',
-            icon: 'error',
-            confirmButtonText: 'Cerrar',
-            confirmButtonColor: '#f48fb1',
-            background: '#fff0f5',
-            color: '#4a004e'
-          });
-        }
+  editarUsuario(usuario: Usuario): void {
+    const dialogRef = this.dialog.open(UsuarioFormComponent, {
+      width: '400px',
+      data: usuario
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.usuarioService.actualizarUsuario(usuario.id!, result).subscribe({
+          next: () => this.cargarUsuarios(),
+          error: (e) => console.error('Error al actualizar usuario:', e)
+        });
+      }
+    });
+  }
+
+  eliminarUsuario(usuario: Usuario): void {
+    if (confirm(`¿Seguro que deseas eliminar a ${usuario.nombre}?`)) {
+      this.usuarioService.eliminarUsuario(usuario.id!).subscribe({
+        next: () => this.cargarUsuarios(),
+        error: (e) => console.error('Error al eliminar usuario:', e)
       });
     }
-  });
-}
+  }
 
+  queEsEsto(): void {
+    this.dialog.open(UsuarioInfoDialogComponent, { width: '400px' });
+  }
 
+  llenarSlam(): void {
+    // ✅ OBTENER el primer usuario seleccionado o advertir si no hay ninguno
+    const usuarios = this.usuarios.data;
+    if (!usuarios || usuarios.length === 0) {
+      alert('Primero debes crear un usuario antes de llenar el Slam 💬');
+      return;
+    }
+
+    // ✅ Ejemplo: tomamos el primer usuario por ahora (puedes mejorar esto luego)
+    const usuarioSeleccionado = usuarios[usuarios.length - 1];
+
+    this.dialog.open(SlamDialogComponent, {
+      width: '600px',
+      data: { usuarioId: usuarioSeleccionado.id, nombre: usuarioSeleccionado.nombre },
+      disableClose: true
+    });
+  }
 }

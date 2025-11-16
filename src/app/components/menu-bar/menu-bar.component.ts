@@ -1,19 +1,26 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { UsuarioListComponent } from '../../components/usuario-list/usuario-list.component';
-
-
-
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-menu-bar',
+  selector: 'app-menubar',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatToolbarModule, UsuarioListComponent],
+  imports: [CommonModule],
   templateUrl: './menu-bar.component.html',
-  styleUrls: ['./menu-bar.component.css'],
-  encapsulation: ViewEncapsulation.None
-
+  styleUrls: ['./menu-bar.component.css']
 })
-export class MenuBarComponent {}
+export class MenuBarComponent implements OnInit {
+  usuario: any = null;
+  esAdmin = false;
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    const u = localStorage.getItem('usuario');
+    this.usuario = u ? JSON.parse(u) : null;
+    this.esAdmin = this.usuario?.username === 'ruthadeline';
+  }
+
+  go(path: string) { this.router.navigate([path]); }
+  logout() { localStorage.removeItem('usuario'); this.router.navigate(['/']); }
+}
