@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PreguntaService {
-  private api = 'http://localhost:8080/api/preguntas';
+  private api = 'https://app-dc5b9476-7c25-4ae3-a9cc-09c9b50d2529.cleverapps.io/api/preguntas';
 
   constructor(private http: HttpClient) {}
 
