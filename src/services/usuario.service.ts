@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  private api = 'https://app-dc5b9476-7c25-4ae3-a9cc-09c9b50d2529.cleverapps.io/api/api/usuarios';
+  private api = 'https://app-dc5b9476-7c25-4ae3-a9cc-09c9b50d2529.cleverapps.io/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
