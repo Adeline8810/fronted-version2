@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export class RespuestaService {
   //private api = 'https://app-dc5b9476-7c25-4ae3-a9cc-09c9b50d2529.cleverapps.io/api/respuestas';
  //private api = 'http://localhost:8080/api/respuestas';
- private api = 'https://backend-cloudv2-production.up.railway.app/api/respuestas';
+     private api = 'https://backend-cloudv2-production-1443.up.railway.app/api/respuestas';
 
   constructor(private http: HttpClient) {}
 
